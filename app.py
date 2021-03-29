@@ -14,10 +14,10 @@ CORS(app)
 def index_route():
 	return jsonify({
 		'author': 'Meet Jethwa',
-		'author_url': 'http://tapasweni-pathak.github.io/',
-		'base_url': 'horoscope-api.herokuapp.com',
+		'author_url': 'http://Meet2147.github.io/',
+		'base_url': 'https://mjhoroscope-api.herokuapp.com/',
 		'project_name': 'Horoscope API',
-		'project_url': 'http://tapasweni-pathak.github.io/Horoscope-API'
+		
 	})
 
 
