@@ -8,3 +8,5 @@ newrelic
 lxml
 requests
 flask-cors
+uvicorn
+fastapi
