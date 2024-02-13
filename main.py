@@ -9,7 +9,7 @@ def fetch_horoscope(url):
     response = requests.get(url)
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
-        horoscope_tag = soup.select_one('main section:nth-of-type(1) div div:nth-of-type(1) div div:nth-of-type(1) p:nth-of-type(1)')
+        horoscope_tag = soup.find(id='horo_content')
         if horoscope_tag:
             horoscope_text = horoscope_tag.get_text(strip=True)
             return horoscope_text
