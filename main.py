@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta, timezone
@@ -9,7 +9,7 @@ def fetch_horoscope(url):
     response = requests.get(url)
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
-        horoscope_tag = soup.find(id='horo_content')
+        horoscope_tag = soup.select_one('main section:nth-of-type(1) div div:nth-of-type(1) div div:nth-of-type(1) p:nth-of-type(1)')
         if horoscope_tag:
             horoscope_text = horoscope_tag.get_text(strip=True)
             return horoscope_text
@@ -18,8 +18,9 @@ def fetch_horoscope(url):
     else:
         return "Failed to retrieve horoscope."
 
-@app.get("/{time_period}/{sunsign}")
-async def read_horoscope(time_period: str, sunsign: str):
+@app.get("/horoscope")
+async def read_horoscope(sunsign: str = Query(..., description="The sunsign to fetch the horoscope for"),
+                         time_period: str = Query(..., description="The time period for the horoscope (yesterday, today, tomorrow, weekly, monthly, yearly)")):
     base_url = "https://www.ganeshaspeaks.com/horoscopes/"
     
     # Mapping for dynamic URL parts
